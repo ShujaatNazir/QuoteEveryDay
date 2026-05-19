@@ -30,7 +30,6 @@ public class EmailService {
 
     @Scheduled(fixedDelay = 30000, initialDelay = 5000)
     public void sendEmail() {
-        System.out.println("running send mail mehtod");
 
         QuoteDto quote = getQuoteService.getQuote();
 
@@ -47,6 +46,7 @@ public class EmailService {
             javaMailSender.send(mail);
             System.out.println("Email Sent");
         } catch (Exception e) {
+            System.out.println("Error while sending the mail");
             e.printStackTrace();
         }
 
