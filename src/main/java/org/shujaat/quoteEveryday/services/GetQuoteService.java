@@ -9,6 +9,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import reactor.core.publisher.Mono;
+
 @Service
 public class GetQuoteService {
 
@@ -19,18 +21,16 @@ public class GetQuoteService {
     }
 
     // this mehtod hits the random quoe api and gets a quote and auhor name;
-    public QuoteDto getQuote() {
+    public Mono<QuoteDto> getQuote() {
         return webClient
                 .get()
                 .uri("https://zenquotes.io/api/random")
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Quote>>() {
                 })
-                .timeout(Duration.ofSeconds(5))
                 .map(q -> new QuoteDto(
                         q.get(0).getQuote(),
-                        q.get(0).getAuthor()))
-                .block();
+                        q.get(0).getAuthor()));
     }
 
 }

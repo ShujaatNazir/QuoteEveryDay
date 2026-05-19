@@ -1,5 +1,7 @@
 package org.shujaat.quoteEveryday.services;
 
+import java.time.Duration;
+
 import org.shujaat.quoteEveryday.dto.QuoteDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,8 +38,10 @@ public class EmailService {
     // calls qet quote servic and extracts the quote and auothr name , and send the
     // mail;
     public void sendEmail() {
-        QuoteDto quote = getQuoteService.getQuote();
-        String body = quote.getQuote() + "\n" + quote.getAuthor();
+        System.out.println("entered the send mail method");
+
+        QuoteDto quoteDto = getQuoteService.getQuote().timeout(Duration.ofSeconds(7)).block();
+        String body = quoteDto.getQuote() + "\nAuthor : " + quoteDto.getAuthor();
 
         try {
 
