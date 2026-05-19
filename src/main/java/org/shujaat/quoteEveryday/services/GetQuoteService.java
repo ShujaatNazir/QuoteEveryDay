@@ -1,6 +1,6 @@
 package org.shujaat.quoteEveryday.services;
 
-import java.time.Duration;
+import java.util.Collections;
 import java.util.List;
 
 import org.shujaat.quoteEveryday.dto.QuoteDto;
@@ -27,6 +27,12 @@ public class GetQuoteService {
                 .uri("https://zenquotes.io/api/random")
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Quote>>() {
+                })
+                .onErrorResume(e -> {
+                    Quote fallback = new Quote();
+                    fallback.setQuote("Every day is a new beginning . Take a deep breath and start again.");
+                    fallback.setAuthor("Shujaat Nazir : ");
+                    return Mono.just(Collections.singletonList(fallback));
                 })
                 .map(q -> new QuoteDto(
                         q.get(0).getQuote(),
