@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
+    // value get the value form the application-local file that is storeed on local
+    // mahcine
     @Value("${mail.to}")
     private String to;
 
@@ -35,7 +37,6 @@ public class EmailService {
     // mail;
     public void sendEmail() {
         QuoteDto quote = getQuoteService.getQuote();
-
         String body = quote.getQuote() + "\n" + quote.getAuthor();
 
         try {
