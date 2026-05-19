@@ -28,9 +28,12 @@ public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    @Scheduled(fixedDelay = 30000, initialDelay = 5000)
-    public void sendEmail() {
+    // this mehtod run every 30s , with the initial delay of 2s..
+    @Scheduled(fixedDelay = 30000, initialDelay = 2000)
 
+    // calls qet quote servic and extracts the quote and auothr name , and send the
+    // mail;
+    public void sendEmail() {
         QuoteDto quote = getQuoteService.getQuote();
 
         String body = quote.getQuote() + "\n" + quote.getAuthor();

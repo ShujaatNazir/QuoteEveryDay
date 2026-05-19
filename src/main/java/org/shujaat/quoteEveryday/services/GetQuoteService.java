@@ -18,6 +18,7 @@ public class GetQuoteService {
         this.webClient = webClient;
     }
 
+    // this mehtod hits the random quoe api and gets a quote and auhor name;
     public QuoteDto getQuote() {
         return webClient
                 .get()
